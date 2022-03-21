@@ -1,8 +1,11 @@
-from django.conf.urls import url
+from django.urls import path
 from . import views
+
+app_name = "ihr"   
+
+
 urlpatterns = [
-    url(r'^$', views.index),
-    url(r'^register$', views.register),
-    url(r'^success$', views.success),
-    url(r'^login$', views.login)
+    path("", views.homepage, name="homepage"),
+    ...
+    path("register", views.register_request, name="register")
 ]
