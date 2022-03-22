@@ -1,10 +1,10 @@
 /* eslint-disable vue/valid-v-for */
 <template>
-  <page-header-wrapper content="高级表单常见于一次性输入和提交大批量数据的场景">
-    <!-- <a-card class="card" title="仓库管理" :bordered="false">
+  <page-header-wrapper content="">
+    <!-- <a-card class="card" title="" :bordered="false">
       <repository-form ref="repository" :showSubmit="false" />
     </a-card>
-    <a-card class="card" title="任务管理" :bordered="false">
+    <a-card class="card" title="" :bordered="false">
       <task-form ref="task" :showSubmit="false" />
     </a-card> -->
 
@@ -44,23 +44,23 @@
         <template slot="operation" slot-scope="text, record">
           <template v-if="record.editable">
             <span v-if="record.isNew">
-              <a @click="saveRow(record)">添加</a>
+              <a @click="saveRow(record)">Add</a>
               <a-divider type="vertical" />
-              <a-popconfirm title="是否要删除此行？" @confirm="remove(record.key)">
-                <a>删除</a>
+              <a-popconfirm title="Delete this line？" @confirm="remove(record.key)">
+                <a>Delete</a>
               </a-popconfirm>
             </span>
             <span v-else>
-              <a @click="saveRow(record)">保存</a>
+              <a @click="saveRow(record)">Submit</a>
               <a-divider type="vertical" />
-              <a @click="cancel(record.key)">取消</a>
+              <a @click="cancel(record.key)">Cancel</a>
             </span>
           </template>
           <span v-else>
-            <a @click="toggle(record.key)">编辑</a>
+            <a @click="toggle(record.key)">Edit</a>
             <a-divider type="vertical" />
-            <a-popconfirm title="是否要删除此行？" @confirm="remove(record.key)">
-              <a>删除</a>
+            <a-popconfirm title="delete this line?" @confirm="remove(record.key)">
+              <a>Delete</a>
             </a-popconfirm>
           </span>
         </template>
@@ -72,7 +72,7 @@
     <!-- fixed footer toolbar -->
     <footer-tool-bar :is-mobile="isMobile" :collapsed="sideCollapsed">
       <span class="popover-wrapper">
-        <a-popover title="表单校验信息" overlayClassName="antd-pro-pages-forms-style-errorPopover" trigger="click" :getPopupContainer="trigger => trigger.parentNode">
+        <a-popover title="table comfirm" overlayClassName="antd-pro-pages-forms-style-errorPopover" trigger="click" :getPopupContainer="trigger => trigger.parentNode">
           <template slot="content">
             <li v-for="item in errors" :key="item.key" @click="scrollToField(item.key)" class="antd-pro-pages-forms-style-errorListItem">
               <a-icon type="cross-circle-o" class="antd-pro-pages-forms-style-errorIcon" />
@@ -85,7 +85,7 @@
           </span>
         </a-popover>
       </span>
-      <a-button type="primary" @click="validate" :loading="loading">提交</a-button>
+      <a-button type="primary" @click="validate" :loading="loading">Submit</a-button>
     </footer-tool-bar>
   </page-header-wrapper>
 </template>
@@ -97,18 +97,12 @@ import FooterToolBar from '@/components/FooterToolbar'
 import { baseMixin } from '@/store/app-mixin'
 
 const fieldLabels = {
-  name: '仓库名',
-  url: '仓库域名',
-  owner: '仓库管理员',
-  approver: '审批人',
-  dateRange: '生效日期',
-  type: '仓库类型',
-  name2: '任务名',
-  url2: '任务描述',
-  owner2: '执行人',
-  approver2: '责任人',
-  dateRange2: '生效日期',
-  type2: '任务类型'
+  name: '',
+  url: '',
+  owner: '',
+  approver: '',
+  dateRange: '',
+  type: '',
 }
 
 export default {
@@ -140,18 +134,6 @@ export default {
           width: '20%',
           scopedSlots: { customRender: 'workId' }
         }
-        // {
-        //   title: '所属部门',
-        //   dataIndex: 'department',
-        //   key: 'department',
-        //   width: '40%',
-        //   scopedSlots: { customRender: 'department' }
-        // }
-        // {
-        //   title: '操作',
-        //   key: 'action',
-        //   scopedSlots: { customRender: 'operation' }
-        // }
       ],
       data: [
       {
@@ -215,10 +197,10 @@ export default {
       const { key, name, workId, department } = record
       if (!name || !workId || !department) {
         this.memberLoading = false
-        this.$message.error('请填写完整成员信息。')
+        this.$message.error('error')
         return
       }
-      // 模拟网络请求、卡顿 800ms
+      
       new Promise((resolve) => {
         setTimeout(() => {
           resolve({ loop: false })
@@ -253,7 +235,6 @@ export default {
       }
     },
 
-    // 最终全页面提交
     validate () {
       const { $refs: { repository, task }, $notification } = this
       const repositoryForm = new Promise((resolve, reject) => {
